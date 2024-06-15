@@ -1,30 +1,32 @@
+<script>
+
+import Navbar from "./components/Navbar.vue"
+
+export default{
+  components:{
+    Navbar
+  }
+}
+
+
+</script>
+
+
+
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+ <Navbar/>
+ <div class="container">
+  <!-- Content here -->
+
+   <router-view/>
+</div>
+  
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
+
+
+<!-- la idea de todo esto es que aqui en nuestra app que es lo que se renderiza siempre queremos que el navbar siempre este activo por lo que lo renderizamos y el <router-view/>
+va a tomar la vista de cada una de nuestras vistas de acuerdo a nuestra ruta -->
