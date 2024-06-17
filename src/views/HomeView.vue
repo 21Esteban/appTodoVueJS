@@ -1,84 +1,21 @@
-<template>
-  <form @submit.prevent="procesarFormulario">
-    <div class="mb-3 mt-3">
-      <label for="exampleInputEmail1" class="form-label"
-        >Ingrese el nombre</label
-      >
-      <input class="form-control" v-model.trim="tarea.nombre" />
-    </div>
-    <div class="form-check">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        value="javaScript"
-        id="flexCheckIndeterminate"
-        v-model="tarea.categorias"
-      />
-      <label class="form-check-label" for="flexCheckIndeterminate">
-        javaScript
-      </label>
-    </div>
-
-    <div class="form-check">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        value="NodeJS"
-        id="flexCheckIndeterminate"
-        v-model="tarea.categorias"
-      />
-      <label class="form-check-label" for="flexCheckIndeterminate">
-        NodeJS
-      </label>
-    </div>
-    <div class="form-check">
-      <input
-        class="form-check-input"
-        type="radio"
-        name="flexRadioDefault"
-        id="flexRadioDefault1"
-        value="Urgente"
-        v-model="tarea.estado"
-      />
-      <label class="form-check-label" for="flexRadioDefault1"> Urgente </label>
-    </div>
-    <div class="form-check">
-      <input
-        class="form-check-input"
-        type="radio"
-        name="flexRadioDefault"
-        id="flexRadioDefault2"
-        value="Relax"
-        v-model="tarea.estado"
-      />
-      <label class="form-check-label" for="flexRadioDefault2"> Relax </label>
-    </div>
-
-    <div class="input-group mb-3">
-      <span class="input-group-text">0.00</span>
-      <input
-        type="number"
-        class="form-control"
-        aria-label="Dollar amount (with dot and two decimal places)"
-        v-model="tarea.numero"
-      />
-    </div>
-    <button type="submit" class="btn btn-primary" :disabled="activeButton">Enviar</button>
-  </form>
-  <p>{{ tarea }}</p>
-
-  
-</template>
-
 <script>
 // @ is an alias to /src
+import InputVue from '@/components/InputVue.vue';
+import { mapActions } from 'vuex';
+import { v4 as uuidv4 } from 'uuid';
+import ListaTareasVue from '@/components/ListaTareas.vue';
+
 
 export default {
   name: "HomeView",
-  components: {},
+  components: {
+    InputVue,
+    ListaTareasVue
+  },
   data() {
     return {
       tarea: {
+        id:"",
         nombre: "",
         categorias: [],
         estado: "",
@@ -88,15 +25,26 @@ export default {
   },
 
   methods:{
+
+    ...mapActions(["ejecutarMutacion"]),
+
     procesarFormulario(){
       if(this.tarea.nombre === ""){
         alert("campo Vacio")
         return
       }
-      console.log(this.tarea);
+
+      //generamos un id aleatorio para nuestra tarea
+
+      this.tarea.id = uuidv4()
+      
+
+      //usamos la accion que importamos desde el store para guardar nuestra tarea en el store 
+      this.ejecutarMutacion(this.tarea)
 
       //limpiamos los campos
       this.tarea = {
+        id:"",
         nombre: "",
         categorias: [],
         estado: "",
@@ -106,14 +54,32 @@ export default {
     }
   },
 
-  computed:{
-    activeButton(){
-      return this.tarea.nombre.length === 0 ? true : false
-    }
-  }
+    //vamos a usar el localStorage , el created nos permite ejecutar algo justo antes de que la instancia de vue se haya terminado de procesar, por lo que justo cuando abramos esta pagina , se va a almacenar lo del localStorage en la variable almacenamientoDelNavegador , al obtener ese almacenamiento , guardamos eso en el arreglo tareas
+
+    // created:{
+    //   crearLocalStorage(){
+    //     let localStorage = JSON.parse(localStorage.getItem("tareas"))
+    //   }
+    // }
+
+  
 
 };
 </script>
+
+
+
+<template>
+  <form @submit.prevent="procesarFormulario">
+    <InputVue :tarea="tarea"/>
+  </form>
+  <!-- <p>{{ tarea }}</p> -->
+
+  <ListaTareasVue/>
+  
+</template>
+
+
 
 <style>
 /* Puedes ajustar el espaciado con CSS si es necesario */
