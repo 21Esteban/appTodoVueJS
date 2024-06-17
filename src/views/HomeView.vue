@@ -1,23 +1,16 @@
-<template>
-  <form @submit.prevent="procesarFormulario">
-    <InputVue :tarea="tarea"/>
-  </form>
-  <p>{{ tarea }}</p>
-
-  
-</template>
-
 <script>
 // @ is an alias to /src
 import InputVue from '@/components/InputVue.vue';
 import { mapActions } from 'vuex';
 import { v4 as uuidv4 } from 'uuid';
+import ListaTareasVue from '@/components/ListaTareas.vue';
 
 
 export default {
   name: "HomeView",
   components: {
-    InputVue
+    InputVue,
+    ListaTareasVue
   },
   data() {
     return {
@@ -61,10 +54,32 @@ export default {
     }
   },
 
+    //vamos a usar el localStorage , el created nos permite ejecutar algo justo antes de que la instancia de vue se haya terminado de procesar, por lo que justo cuando abramos esta pagina , se va a almacenar lo del localStorage en la variable almacenamientoDelNavegador , al obtener ese almacenamiento , guardamos eso en el arreglo tareas
+
+    // created:{
+    //   crearLocalStorage(){
+    //     let localStorage = JSON.parse(localStorage.getItem("tareas"))
+    //   }
+    // }
+
   
 
 };
 </script>
+
+
+
+<template>
+  <form @submit.prevent="procesarFormulario">
+    <InputVue :tarea="tarea"/>
+  </form>
+  <!-- <p>{{ tarea }}</p> -->
+
+  <ListaTareasVue/>
+  
+</template>
+
+
 
 <style>
 /* Puedes ajustar el espaciado con CSS si es necesario */
