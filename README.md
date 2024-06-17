@@ -1,4 +1,5 @@
-![image](https://github.com/21Esteban/appTodoVueJS/assets/118059283/4b398131-c86e-4339-b48e-960f5d32aaa0)
+![image](https://github.com/21Esteban/appTodoVueJS/assets/118059283/f98232da-691a-469f-b137-4f32508b0f90)
+
 
 
 # vue-formularios
